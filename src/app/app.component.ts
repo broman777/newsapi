@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NewsParserService } from './news-parser.service';
 
 interface Country {
@@ -16,6 +16,9 @@ export class AppComponent implements OnInit {
   category: String
   country: String
   query: String
+  totalNews: Number = 0
+  pageSize: Number = 12
+  pageCurrent: Number = 1
   categories: String[] = [
     'entertainment',
     'general',
@@ -51,9 +54,16 @@ export class AppComponent implements OnInit {
     this.country = this.countries[0].iso;
     this.getNews()
   }
+
+  pageChanged(event: any): void {
+    this.pageCurrent = event.page;
+    this.getNews()
+  }
+
   getNews() {
-    this.newsParserService.getNews(this.country, this.category).subscribe((response) => {
+    this.newsParserService.getNews(this.country, this.category, this.pageCurrent, this.pageSize).subscribe((response) => {
       this.news = response['articles']
+      this.totalNews = response['totalResults']
     })
   }
 

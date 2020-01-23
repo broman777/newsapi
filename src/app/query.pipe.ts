@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class QueryPipe implements PipeTransform {
 
   transform(input: [], query?: String): any {
-    if (query) {
+    if (query && query.length > 2) {
       let result = []
       for (let i in input) {
         let item: {} = input[i]

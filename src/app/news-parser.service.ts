@@ -10,9 +10,11 @@ export class NewsParserService {
 
   constructor(private httpClient: HttpClient) { 
   }
-  public getNews(country:String, category:String){
+  public getNews(country:String, category:String, currentPage:Number, pageSize:Number){
+    let size = (pageSize) ? '&pageSize='+pageSize : '';
+    let page = (currentPage) ? '&page='+currentPage : '';
     category = (category) ? '&category='+category : ''
     country = (country) ? '&country='+country : '&country=ua'
-    return this.httpClient.get(`https://newsapi.org/v2/top-headlines?apiKey=${this.API_KEY}${country}${category}`);
+    return this.httpClient.get(`https://newsapi.org/v2/top-headlines?apiKey=${this.API_KEY}${page}${size}${country}${category}`);
   }
 }
